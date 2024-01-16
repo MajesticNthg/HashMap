@@ -1,24 +1,23 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class Main {
-    static void list (int[] randNumber, int N) {
+    public static ArrayList<Integer> list (int[] randNumber, int N) {
+        ArrayList<Integer> r = new ArrayList<Integer>();
         HashMap<Integer, Integer> finalNumbers = new HashMap<Integer, Integer>(); // итоговый словарь
-        int x = 0;
+
         for(int i = 0; i < randNumber.length; i++) {
-            x = 0;
-            for(int y = 0; y < randNumber.length; y++) {
-                if (randNumber[i] == randNumber[y])
-                    x++;
-                if (x == N) {
-                    finalNumbers.put(randNumber[i], i); // поскольку ключ - уникальное значение, то оно автоматически убирает дубликаты
-                    break;
-                }
+            int x = randNumber[i];
+            if (finalNumbers.containsKey(x)) {
+                finalNumbers.put(x, finalNumbers.get(x)+1);
+            } else {
+                finalNumbers.put(x, 1);
             }
+            if (finalNumbers.get(x) == N)
+                r.add(x);
         }
-        for(Integer i : finalNumbers.keySet()) {
-            System.out.println(i);
-        }
+        return r;
     }
     public static void main(String[] args) {
         Random rand = new Random();
